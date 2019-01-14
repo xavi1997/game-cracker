@@ -10,14 +10,9 @@ TWO PLAYER GAME CRACKER
     -Must be immutable
 """
 
+from all_movements_from import all_movements_from
+from victory import victory
 
-
-def all_movements_from(position, player):
-    """
-    Game-dependent
-    Player is 0 or 1
-    """
-    return all_movements_from_tick_tack_toe(position, player)
     
 def best_movement(current_position, player): # player is about to move
     """
@@ -97,56 +92,6 @@ def score(player_movement, player, score_dict = {}):
         if next_score == .5: # means other player can't win, but can force a draw
             out = .5 # means if other player can't win, at least he can force draw
     return out, score_dict
-
-def victory(position):
-    """
-    Returns 0 (winner is 0), 1 (winner is 1), .5 (draw), -1 (no one has won but
-    game hasn't ended)
-    """
-    return victory_tick_tack_toe(position)
-
-
-
-
-def all_movements_from_tick_tack_toe(position, player):
-    """
-    WORKING. TESTED
-    
-    Takes O(board)
-    """
-    for i in range(3):
-        for j in range(3):
-            if position[i][j] not in (0, 1):
-                movement = [[position[row][col] for col in range(3)] for row in range(3)]
-                movement[i][j] = player
-                yield tuple(tuple(movement[row]) for row in range(3))
-
-
-def victory_tick_tack_toe(position):
-    """
-    Returns 0 (winner is 0), 1 (winner is 1), .5 (draw), -1 (no one has won but
-    game hasn't ended)
-    
-    TESTED. WORKING
-    
-    Runs in O(board)
-    """
-    for i in range(3):
-        if position[i][0] == position[i][1] == position[i][2]:
-            return position[i][0]
-    for i in range(3):
-        if position[0][i] == position[1][i] == position[2][i]:
-            return position[0][i]
-    if position[0][0] == position[1][1] == position[2][2]:
-        return position[0][0]
-    if position[2][0] == position[1][1] == position[0][2]:
-        return position[1][1]
-    
-    for i in range(3):
-        for j in range(3):
-            if position[i][j] not in (0, 1):
-                return -1
-    return .5
     
 position = ((1, None, 1), (1, 0, 0), (0, 1, 1))
 player = 1
